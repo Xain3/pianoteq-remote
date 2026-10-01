@@ -37,17 +37,28 @@ Pianoteq hardware.
 
 ## Conventional Commits
 
-Write a short, imperative summary in the form `type(scope): summary`, for example:
+`npm install` configures a local `commit-msg` hook that checks new commits. Run
+`npm run commitlint:check` to check the latest commit manually. The hook and command enforce
+the format below, including the required rationale, change details and breaking-change status.
+
+Start with a short, imperative summary in the form `type(scope): summary`, then include a
+commit body with the rationale and key details of the change. State `Breaking changes: None`
+when there are no breaking changes. For an incompatible change, end with a `BREAKING CHANGE:`
+footer describing the impact and any required migration. For example:
 
 ```text
 feat(themes): add editable appearance presets
-fix(rpc): preserve the host parameter ID
-test(api): cover unavailable Pianoteq responses
-docs(readme): explain LAN setup
+
+Why: Let users tailor the interface without editing theme files.
+
+What changed:
+- Add editable color controls and preset saving.
+
+Breaking changes: None
 ```
 
 Use `feat`, `fix`, `docs`, `test`, `refactor`, `build`, or `chore` as appropriate. Add a
-`BREAKING CHANGE:` footer for an incompatible public API change.
+`BREAKING CHANGE:` footer for any incompatible change, including its impact and migration steps.
 
 ## Versions and releases
 
