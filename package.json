@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+    "node": "^24.0.0"
   },
   "scripts": {
     "dev": "npm run build -w @ptq/shared && concurrently --kill-others -n shared,api,web \"npm run dev -w @ptq/shared\" \"npm run dev -w @ptq/backend\" \"npm run dev -w @ptq/frontend\"",
@@ -27,12 +27,12 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "concurrently": "^9.2.0",
+    "concurrently": "^10.0.5",
     "cross-env": "^10.0.0",
     "prettier": "^3.6.0",
     "semver": "^7.8.5",
     "tsx": "^4.20.0",
-    "typescript": "^5.9.0",
+    "typescript": "^7.0.2",
     "vitest": "^5.0.3"
   }
 }
