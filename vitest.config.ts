@@ -14,6 +14,7 @@ export default defineConfig({
       'apps/backend/test/**/*.test.ts',
       'packages/shared/test/**/*.test.ts',
       'apps/frontend/src/features/themes/**/*.test.ts',
+      'scripts/**/*.test.mjs',
     ],
     clearMocks: true,
     restoreMocks: true,
