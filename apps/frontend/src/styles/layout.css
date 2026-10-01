@@ -1,0 +1,181 @@
+.app-shell {
+  max-width: 1240px;
+  padding: 0 40px;
+  margin: auto;
+}
+.app-header {
+  min-height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 30px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+.brand img {
+  width: 42px;
+  height: 42px;
+}
+.brand strong {
+  font-weight: 400;
+}
+.brand small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+  grid-template-areas: 'presets hero' 'presets volume' 'presets devices';
+  gap: 22px 28px;
+  align-items: start;
+}
+.preset-panel {
+  grid-area: presets;
+}
+.now-playing {
+  grid-area: hero;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 180px;
+  padding: 12px 8px;
+}
+.now-playing > div {
+  flex: 1;
+  min-width: 0;
+}
+.now-playing p {
+  margin-top: 16px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.piano-mark {
+  width: 180px;
+  max-width: 30%;
+  transform: rotate(-6deg);
+  flex-shrink: 0;
+}
+.volume-panel {
+  grid-area: volume;
+}
+.io-panel {
+  grid-area: devices;
+}
+.panel {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: 0 4px 14px var(--shadow);
+}
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  padding: 28px 0 32px;
+  font-size: 0.7rem;
+}
+@media (max-width: 960px) {
+  .app-shell {
+    padding: 0 24px;
+  }
+  .workspace {
+    grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
+    gap: 20px;
+  }
+  .panel {
+    padding: 21px;
+  }
+  .piano-mark {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .app-shell {
+    padding: 0 16px;
+  }
+  .app-header {
+    min-height: 88px;
+    margin-bottom: 20px;
+  }
+  .brand {
+    font-size: 1rem;
+  }
+  .brand img {
+    width: 35px;
+    height: 35px;
+  }
+  .brand small {
+    display: none;
+  }
+  .header-actions {
+    gap: 7px;
+  }
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'hero' 'volume' 'presets' 'devices';
+    gap: 18px;
+  }
+  .now-playing {
+    min-height: 130px;
+    padding: 5px 6px 15px;
+  }
+  .piano-mark {
+    display: block;
+    width: 110px;
+  }
+  .app-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+}
+@media (max-width: 400px) {
+  .app-header {
+    gap: 8px;
+  }
+  .brand {
+    min-width: 0;
+    gap: 8px;
+  }
+  .brand > span {
+    min-width: 0;
+  }
+  .header-actions {
+    flex-shrink: 0;
+    gap: 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

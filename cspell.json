@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Pianoteq",
+    "Modartt",
+    "JSONRPC",
+    "Fastify",
+    "Vitest",
+    "Workbox",
+    "Zod",
+    "PWA",
+    "PresetIdentity",
+    "PianoteqGateway"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "coverage/**",
+    ".vitest/**",
+    ".npm-cache/**",
+    "package-lock.json"
+  ]
+}
