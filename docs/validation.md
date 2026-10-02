@@ -2,6 +2,10 @@
 
 Checked on Windows with Node.js 24.12.0.
 
+## ESLint and TypeScript 7
+
+`typescript-eslint` currently needs the TypeScript 6 compiler API. The root `typescript` dependency is therefore aliased to `@typescript/typescript6` for linting, while `@typescript/native` keeps the TypeScript 7 compiler available to project builds. This is temporary: once `typescript-eslint` supports the installed TypeScript 7 version, remove the aliases, restore the regular TypeScript 7 dependency, and rerun `npm run lint` and `npm run typecheck`.
+
 - Vitest covers RPC/API behavior, shared contracts, theme colour math and storage, and SemVer release rules.
 - TypeScript: frontend, backend, shared code and test sources passed strict type checking.
 - Production build: frontend assets, PWA manifest and service worker generated successfully.
