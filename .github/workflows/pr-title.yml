@@ -1,0 +1,51 @@
+name: PR title
+
+# Use trusted base code to validate metadata, including PRs from forks.
+# Never check out or execute the PR head in this workflow.
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  title:
+    name: PR title
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Validate Conventional Commit title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          node --input-type=module <<'JS'
+          import load from '@commitlint/load';
+          import lint from '@commitlint/lint';
+          const title = process.env.PR_TITLE ?? '';
+          if (!title.trim() || /[\r\n]/.test(title)) {
+            console.error('PR title must be a non-empty single line.');
+            process.exit(1);
+          }
+          const config = await load({}, { cwd: process.cwd() });
+          const result = await lint(title, config.rules, {
+            parserOpts: config.parserPreset?.parserOpts,
+          });
+          for (const issue of [...result.errors, ...result.warnings]) {
+            console.error(`${issue.name}: ${issue.message}`);
+          }
+          process.exit(result.valid ? 0 : 1);
+          JS
