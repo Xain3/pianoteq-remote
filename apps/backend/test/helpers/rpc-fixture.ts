@@ -1,5 +1,7 @@
 import { RpcClient } from '../../src/rpc/RpcClient.js';
 
+let fixtureId = 0;
+
 export function instrumentFixture(volumeId = 'volume') {
   let volume = 0.5;
   let name = 'Concert';
@@ -48,5 +50,8 @@ export function instrumentFixture(volumeId = 'volume') {
       status: 200,
     });
   };
-  return { rpc: new RpcClient('http://localhost/jsonrpc', 1000, request), writes };
+  return {
+    rpc: new RpcClient(`http://localhost/jsonrpc/${fixtureId++}`, 1000, request),
+    writes,
+  };
 }
