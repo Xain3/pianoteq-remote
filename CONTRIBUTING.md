@@ -39,26 +39,30 @@ Pianoteq hardware.
 
 `npm install` configures a local `commit-msg` hook that checks new commits. Run
 `npm run commitlint:check` to check the latest commit manually. The hook and command enforce
-the format below, including the required rationale, change details and breaking-change status.
+Conventional Commit syntax and the accepted types.
 
-Start with a short, imperative summary in the form `type(scope): summary`, then include a
-commit body with the rationale and key details of the change. State `Breaking changes: None`
-when there are no breaking changes. For an incompatible change, end with a `BREAKING CHANGE:`
-footer describing the impact and any required migration. For example:
+Start with a short, imperative summary in the form `type: summary` or `type(scope): summary`.
+Scope is optional; include it when it helps identify the affected area. Use `feat`, `fix`,
+`docs`, `test`, `refactor`, `build`, or `chore` as appropriate. A small change can use just a
+header:
 
 ```text
-feat(themes): add editable appearance presets
-
-Why: Let users tailor the interface without editing theme files.
-
-What changed:
-- Add editable color controls and preset saving.
-
-Breaking changes: None
+docs: correct demo startup instructions
 ```
 
-Use `feat`, `fix`, `docs`, `test`, `refactor`, `build`, or `chore` as appropriate. Add a
-`BREAKING CHANGE:` footer for any incompatible change, including its impact and migration steps.
+A body is optional. Add a natural-language explanation when the rationale or behavior needs
+context; no fixed labels or declaration of no breaking changes are required. For example:
+
+```text
+fix(settings): preserve saved theme on startup
+
+Startup defaults were overwriting the user's saved selection.
+Apply defaults only when no valid saved theme exists.
+```
+
+For an incompatible change, mark the header with `!` or add a `BREAKING CHANGE:` footer.
+Explain the impact and any required migration in the body or footer. Authors are responsible
+for identifying incompatible changes; commitlint validates syntax, not compatibility.
 
 ## Versions and releases
 
