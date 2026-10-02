@@ -30,6 +30,7 @@ export class RpcClient {
   private readonly sessionId: string;
   private disposed = false;
   private disposePromise?: Promise<void>;
+  private readonly activeCalls = new Set<Promise<unknown>>();
 
   constructor(
     private readonly url: string,
@@ -49,9 +50,13 @@ export class RpcClient {
   }
 
   async call(method: string, params: object | unknown[] = []): Promise<unknown> {
-    if (this.disposed)
-      throw new AppError('RPC_CLIENT_DISPOSED', 'This Pianoteq RPC client has been disposed.', 409);
-    return this.lock.run(() => this.execute(method, params));
+    this.ensureActive();
+    return this.track(this.lock.run(() => this.execute(method, params)));
+  }
+
+  async callParallel(method: string, params: object | unknown[] = []): Promise<unknown> {
+    this.ensureActive();
+    return this.track(this.execute(method, params));
   }
 
   dispose(): Promise<void> {
@@ -59,10 +64,25 @@ export class RpcClient {
     this.disposed = true;
     this.disposePromise = this.lock
       .run(async () => undefined)
-      .then(() => {
+      .then(async () => {
+        await Promise.allSettled(this.activeCalls);
         if (sessionOwners.get(this.sessionId) === this) sessionOwners.delete(this.sessionId);
       });
     return this.disposePromise;
+  }
+
+  private ensureActive(): void {
+    if (this.disposed)
+      throw new AppError('RPC_CLIENT_DISPOSED', 'This Pianoteq RPC client has been disposed.', 409);
+  }
+
+  private track<T>(operation: Promise<T>): Promise<T> {
+    this.activeCalls.add(operation);
+    void operation.then(
+      () => this.activeCalls.delete(operation),
+      () => this.activeCalls.delete(operation),
+    );
+    return operation;
   }
 
   private async execute(method: string, params: object | unknown[]): Promise<unknown> {

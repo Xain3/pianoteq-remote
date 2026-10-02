@@ -77,6 +77,25 @@ test('calls on one client are serialized in invocation order', async () => {
   await rpc.dispose();
 });
 
+test('callParallel explicitly allows calls on one client to overlap', async () => {
+  let active = 0;
+  let maximumActive = 0;
+  const request: typeof fetch = async (_input, options) => {
+    const command = JSON.parse(String(options?.body));
+    active++;
+    maximumActive = Math.max(maximumActive, active);
+    await setTimeout(5);
+    active--;
+    return new Response(JSON.stringify({ jsonrpc: '2.0', id: command.id, result: command.method }));
+  };
+  const rpc = new RpcClient('http://localhost/parallel', 1000, request);
+  await expect(
+    Promise.all([rpc.callParallel('first'), rpc.callParallel('second')]),
+  ).resolves.toEqual(['first', 'second']);
+  expect(maximumActive).toBe(2);
+  await rpc.dispose();
+});
+
 test('only one client can own a Pianoteq session at a time', async () => {
   const url = 'http://localhost/shared-session';
   const first = new RpcClient(url, 1000, fetch);
