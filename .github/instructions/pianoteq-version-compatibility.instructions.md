@@ -1,10 +1,11 @@
 ---
-description: "Use when changing Pianoteq RPC integration, response parsing, or shared instrument contracts. Preserve backward compatibility from Pianoteq 7.5 through all 8.x releases."
+description: 'Use when changing Pianoteq RPC integration, response parsing, or shared instrument contracts. Preserve backward compatibility from Pianoteq 7.5 through all 8.x releases.'
 applyTo:
-  - "apps/backend/src/pianoteq/**/*.ts"
-  - "apps/backend/src/rpc/**/*.ts"
-  - "packages/shared/src/**/*.ts"
+  - 'apps/backend/src/pianoteq/**/*.ts'
+  - 'apps/backend/src/rpc/**/*.ts'
+  - 'packages/shared/src/**/*.ts'
 ---
+
 # Pianoteq Version Compatibility
 
 - Treat Pianoteq 7.5 through all 8.x releases as the compatibility target, not as a claim of live verification.

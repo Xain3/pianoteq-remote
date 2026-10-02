@@ -64,6 +64,24 @@ For an incompatible change, mark the header with `!` or add a `BREAKING CHANGE:`
 Explain the impact and any required migration in the body or footer. Authors are responsible
 for identifying incompatible changes; commitlint validates syntax, not compatibility.
 
+## Pull request checks
+
+GitHub Actions runs project validation on pull requests and pushes to `main`: version
+consistency, formatting, type checking, tests, and the production build. The separate
+`PR title` check validates titles against the base branch's commitlint policy, including
+optional scope and no required body. It reruns when the title changes or new commits arrive.
+Use `!` in the title for breaking changes and explain the impact and migration in the PR body.
+
+Repository administrators should configure a branch ruleset for `main` that requires pull
+requests and the `Project validation` and `PR title` status checks. Workflow files alone do
+not enforce merge requirements. Select the checks after their first runs. If using squash
+merges, configure the default squash commit title to use the PR title.
+
+The title workflow uses `pull_request_target` and checks out only the trusted base commit.
+It reads the PR title as data and runs no PR code. Keep it separate from project validation;
+do not add PR-head checkout, shared caches, or PR-code execution to that workflow.
+These checks do not establish live Pianoteq or hardware compatibility.
+
 ## Versions and releases
 
 This repository uses synchronized SemVer across the root and private npm workspaces. Check
