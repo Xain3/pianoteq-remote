@@ -1,0 +1,3 @@
+{
+  "gitlens.ai.generateCommits.customInstructions": "Follow Conventional Commits. Use an imperative type(scope): summary header. Include a Why: rationale and What changed: details. State Breaking changes: None when compatible. For incompatible changes, end with a BREAKING CHANGE: footer describing the impact and required migration. Keep the message faithful to the actual changes; do not claim unverified tests, behavior, or migrations."
+}
