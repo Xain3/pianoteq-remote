@@ -11,6 +11,12 @@ npm install
 npm run dev:demo
 ```
 
+Native npm development remains the default. For optional production-container and
+demo workflows, see [deployment](docs/deployment.md). After changing container files,
+validate all three Compose configurations, build the image, and check that the demo
+serves `/api/health` and the frontend. Record any unavailable Docker or live Pianoteq
+checks explicitly.
+
 Before opening a pull request, run:
 
 ```sh
