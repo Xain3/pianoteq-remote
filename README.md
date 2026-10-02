@@ -52,6 +52,14 @@ The host does not silently fall back to demo mode when Pianoteq is unavailable.
 They are deliberately unsupported in this adapter. Configure devices in Pianoteq; the scaffold
 provides a gateway boundary for a future supported implementation. It never edits `.prefs` files.
 
+## Backend RPC concurrency
+
+Backend `RpcClient.call()` requests are serialized per client to preserve command order, and a
+process-wide guard prevents multiple clients from owning the same Pianoteq session. Use
+`RpcClient.callParallel(method, params)` only for operations known to be safe to overlap; this
+explicit override bypasses serialization, so request order is not guaranteed. Dispose the client
+when finished to release session ownership; disposal waits for its outstanding requests.
+
 ## Production / phone access
 
 ```sh
