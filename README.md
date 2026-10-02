@@ -71,6 +71,13 @@ or choose an equivalent trusted local deployment. On the host computer, localhos
 an accepted development exception. The service worker is enabled in production builds,
 not during `npm run dev`. The server must remain reachable for instrument control.
 
+## Deployment choices
+
+Use the native `npm run build` / `npm start` workflow above for a personal computer,
+especially when Docker is not already installed. For an always-on deployment or a
+reproducible demo, use the optional [Docker deployment](docs/deployment.md).
+Both run the same frontend and API; Pianoteq stays installed and configured on the host.
+
 ## Project map
 
 ```text

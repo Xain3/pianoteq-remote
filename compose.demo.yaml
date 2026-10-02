@@ -1,0 +1,4 @@
+services:
+  remote:
+    environment:
+      PTQ_MODE: demo

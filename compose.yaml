@@ -1,0 +1,19 @@
+services:
+  remote:
+    build: .
+    image: pianoteq-remote:local
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      PTQ_MODE: real
+      PTQ_API_HOST: 0.0.0.0
+      PTQ_API_PORT: 8787
+      PTQ_RPC_URL: ${PTQ_RPC_URL:-http://host.docker.internal:8081/jsonrpc}
+      PTQ_RPC_TIMEOUT_MS: ${PTQ_RPC_TIMEOUT_MS:-4000}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - '${PTQ_PUBLISH_HOST:-127.0.0.1}:${PTQ_PUBLISH_PORT:-8787}:8787'
